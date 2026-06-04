@@ -19,7 +19,7 @@ jobs:
           ${{ secrets.CPANEL_USER }}@${{ secrets.CPANEL_SERVER }} << 'EOF'
             
             DEPLOY_DIR=~/marketing.noodobakers.com
-            BUILD_DIR=~/promo.noodobaker.source
+            BUILD_DIR=~/marketing.noodobakers.source
             REPO_URL=git@github.com:JAK-cloud/promo.git
             BRANCH=main
 
