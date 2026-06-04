@@ -20,7 +20,7 @@ jobs:
             
             DEPLOY_DIR=~/marketing.noodobakers.com
             BUILD_DIR=~/promo.noodobaker.source
-            REPO_URL=git@github.com:JAK-cloud/promo.githttps://github.com/JAK-cloud/promo.git
+            REPO_URL=git@github.com:JAK-cloud/promo.git
             BRANCH=main
 
             mkdir -p "$BUILD_DIR" 
