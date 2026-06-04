@@ -5,19 +5,24 @@ import { PromotionService } from "./services/promotion.services";
 import { getSocket, disconnectSocket } from "./services/socket";
 import "./App.css";
 
-const AUTOPLAY_INTERVAL = 8000;
+const AUTOPLAY_INTERVAL = 5000;
 
 function App() {
     const [promotions, setPromotions] = useState<IPromotion[]>([]);
     const [activeSlide, setActiveSlide] = useState(0);
+    const [loading, setLoading] = useState(true);
+
     const autoplayRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
     const fetchData = useCallback(async () => {
         try {
+            setLoading(true);
             const data = await PromotionService.getPromotion();
             setPromotions(data);
         } catch (err) {
             console.error("Failed to fetch promotions", err);
+        } finally {
+            setLoading(false);
         }
     }, []);
 
@@ -48,13 +53,26 @@ function App() {
         if (promotions.length > 1) {
             startAutoplay();
         }
+
         return () => {
             if (autoplayRef.current) clearInterval(autoplayRef.current);
         };
     }, [promotions.length, startAutoplay]);
 
-    if (promotions.length === 0) {
-        return <div className="promo-fullscreen-empty" />;
+    if (loading) {
+        return (
+            <div className="promo-fullscreen-empty">
+                <div className="state-message">Loading medias...</div>
+            </div>
+        );
+    }
+
+    if (!loading && promotions.length === 0) {
+        return (
+            <div className="promo-fullscreen-empty">
+                <div className="state-message">No media available right now.</div>
+            </div>
+        );
     }
 
     const currentPromo = promotions[activeSlide] || promotions[0];
