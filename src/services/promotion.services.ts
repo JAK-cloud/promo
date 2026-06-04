@@ -5,6 +5,7 @@ export const PromotionService = {
     async getPromotion(): Promise<IPromotion[]> {
         const res = await apiClient.get(`/api/promotions`);
 
+        console.log(res);
         return res.data.data;
     },
 };
